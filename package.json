@@ -1,0 +1,25 @@
+{
+  "name": "orchard-hig",
+  "version": "0.1.0",
+  "description": "Apple Human Interface Guidelines compliance checker for SwiftUI. MCP server for Claude Code.",
+  "author": "Like One <hello@likeone.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sophiacave/orchard-hig"
+  },
+  "keywords": [
+    "apple",
+    "hig",
+    "swiftui",
+    "xcode",
+    "accessibility",
+    "design-system",
+    "mcp",
+    "claude-code",
+    "ios",
+    "macos"
+  ],
+  "main": "src/mcp_server.py",
+  "files": ["src/", "rules/", "README.md", "LICENSE"]
+}
