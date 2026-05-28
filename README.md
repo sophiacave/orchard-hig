@@ -1,4 +1,9 @@
-# orchard-hig
+# Orchard HIG
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Tests: 52 passing](https://img.shields.io/badge/Tests-52%20passing-green.svg)](tests/)
+[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-orange.svg)](https://modelcontextprotocol.io)
 
 **Apple HIG compliance checker for Claude Code.** Checks SwiftUI code against 22 Human Interface Guidelines rules. Zero competitors.
 
