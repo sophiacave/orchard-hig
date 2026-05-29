@@ -1,0 +1,23 @@
+{
+  "manifest_version": "0.3",
+  "name": "orchard-hig",
+  "version": "1.0.0",
+  "description": "Apple Human Interface Guidelines compliance checker for SwiftUI. 22 rules covering typography, spacing, color, accessibility, and navigation.",
+  "display_name": "Orchard HIG",
+  "author": {"name": "Like One Foundation", "url": "https://likeone.ai"},
+  "server": {
+    "type": "python",
+    "entry_point": "src/mcp_server.py",
+    "mcp_config": {"command": "python3", "args": ["${__dirname}/src/mcp_server.py"]}
+  },
+  "tools": [
+    {"name": "hig_check_file", "description": "Check a SwiftUI file against Apple HIG rules.", "inputSchema": {"type": "object", "properties": {"file_path": {"type": "string"}}, "required": ["file_path"]}},
+    {"name": "hig_check_code", "description": "Check SwiftUI code snippet against HIG rules.", "inputSchema": {"type": "object", "properties": {"code": {"type": "string"}}, "required": ["code"]}},
+    {"name": "hig_suggest", "description": "Get HIG-compliant suggestions for a UI component.", "inputSchema": {"type": "object", "properties": {"component": {"type": "string"}}, "required": ["component"]}},
+    {"name": "hig_rules", "description": "List all available HIG rules.", "inputSchema": {"type": "object", "properties": {}}}
+  ],
+  "keywords": ["apple", "hig", "swiftui", "design", "accessibility", "ios", "macos"],
+  "license": "MIT",
+  "repository": {"type": "git", "url": "https://github.com/likeone-ai/orchard-hig"},
+  "homepage": "https://likeone.ai"
+}
