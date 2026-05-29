@@ -12,7 +12,7 @@ PASS = 0
 FAIL = 0
 
 
-def test(name, condition):
+def check(name, condition):
     global PASS, FAIL
     if condition:
         PASS += 1
@@ -34,9 +34,9 @@ def test_rule_coverage():
         "I1", "I2",
         "P1",
     ]
-    test("22 rules defined in HIG_RULES", len(HIG_RULES) >= 22)
+    check("22 rules defined in HIG_RULES", len(HIG_RULES) >= 22)
     for rule_id in expected_rules:
-        test(f"Rule {rule_id} in HIG_RULES", rule_id in HIG_RULES)
+        check(f"Rule {rule_id} in HIG_RULES", rule_id in HIG_RULES)
 
 
 def test_accessibility_rules():
@@ -47,25 +47,25 @@ def test_accessibility_rules():
     code = 'Button("Tap") { }\n'
     violations = check_all(code)
     a1 = [v for v in violations if v.rule_id == "A1"]
-    test("A1 fires on Button without accessibilityLabel", len(a1) > 0)
+    check("A1 fires on Button without accessibilityLabel", len(a1) > 0)
 
     # A1 should NOT fire when label is present
     code = 'Button("Tap") { }\n.accessibilityLabel("Tap button")\n'
     violations = check_all(code)
     a1 = [v for v in violations if v.rule_id == "A1"]
-    test("A1 silent when accessibilityLabel present", len(a1) == 0)
+    check("A1 silent when accessibilityLabel present", len(a1) == 0)
 
     # A2: Hard-coded font size
     code = '.font(.system(size: 16))\n'
     violations = check_all(code)
     a2 = [v for v in violations if v.rule_id == "A2"]
-    test("A2 fires on hard-coded font size", len(a2) > 0)
+    check("A2 fires on hard-coded font size", len(a2) > 0)
 
     # A4: Animation without reduce motion
     code = 'withAnimation(.spring()) {\n    show.toggle()\n}\n'
     violations = check_all(code)
     a4 = [v for v in violations if v.rule_id == "A4"]
-    test("A4 fires on animation without reduce motion check", len(a4) > 0)
+    check("A4 fires on animation without reduce motion check", len(a4) > 0)
 
 
 def test_touch_targets():
@@ -74,12 +74,12 @@ def test_touch_targets():
     code = 'Button("X") { }\n.frame(width: 20, height: 20)\n'
     violations = check_all(code)
     t1 = [v for v in violations if v.rule_id == "T1"]
-    test("T1 fires on 20pt touch target", len(t1) > 0)
+    check("T1 fires on 20pt touch target", len(t1) > 0)
 
     code = 'Button("X") { }\n.frame(width: 44, height: 44)\n'
     violations = check_all(code)
     t1 = [v for v in violations if v.rule_id == "T1"]
-    test("T1 silent on 44pt touch target", len(t1) == 0)
+    check("T1 silent on 44pt touch target", len(t1) == 0)
 
 
 def test_color_rules():
@@ -90,13 +90,13 @@ def test_color_rules():
     code = 'Color(red: 0.5, green: 0.3, blue: 0.1)\n'
     violations = check_all(code)
     c1 = [v for v in violations if v.rule_id == "C1"]
-    test("C1 fires on Color(red:green:blue:)", len(c1) > 0)
+    check("C1 fires on Color(red:green:blue:)", len(c1) > 0)
 
     # D2: Hard-coded white background
     code = '.background(Color.white)\n'
     violations = check_all(code)
     d2 = [v for v in violations if v.rule_id == "D2"]
-    test("D2 fires on .background(Color.white)", len(d2) > 0)
+    check("D2 fires on .background(Color.white)", len(d2) > 0)
 
 
 def test_component_rules():
@@ -107,13 +107,13 @@ def test_component_rules():
     code = 'NavigationView {\n    Text("Hello")\n}\n'
     violations = check_all(code)
     s1 = [v for v in violations if v.rule_id == "S1"]
-    test("S1 fires on NavigationView", len(s1) > 0)
+    check("S1 fires on NavigationView", len(s1) > 0)
 
     # S4: Missing navigation title
     code = 'NavigationStack {\n    List { }\n}\n'
     violations = check_all(code)
     s4 = [v for v in violations if v.rule_id == "S4"]
-    test("S4 fires on NavigationStack without navigationTitle", len(s4) > 0)
+    check("S4 fires on NavigationStack without navigationTitle", len(s4) > 0)
 
 
 def test_layout_rules():
@@ -124,13 +124,13 @@ def test_layout_rules():
     code = 'Text("Content")\n.ignoresSafeArea()\n'
     violations = check_all(code)
     l1 = [v for v in violations if v.rule_id == "L1"]
-    test("L1 fires on ignoresSafeArea without background context", len(l1) > 0)
+    check("L1 fires on ignoresSafeArea without background context", len(l1) > 0)
 
     # L2: Non-standard padding
     code = '.padding(13)\n'
     violations = check_all(code)
     l2 = [v for v in violations if v.rule_id == "L2"]
-    test("L2 fires on non-standard padding(13)", len(l2) > 0)
+    check("L2 fires on non-standard padding(13)", len(l2) > 0)
 
 
 def test_material_rules():
@@ -141,7 +141,7 @@ def test_material_rules():
     code = 'TabView {\n}\n.background(Color.red)\nUITabBar.appearance().backgroundColor = .white\n'
     violations = check_all(code)
     g3 = [v for v in violations if v.rule_id == "G3"]
-    test("G3 fires on UITabBar.appearance()", len(g3) > 0)
+    check("G3 fires on UITabBar.appearance()", len(g3) > 0)
 
 
 def test_interaction_rules():
@@ -152,7 +152,7 @@ def test_interaction_rules():
     code = 'Button("Delete", role: .destructive) { deleteItem() }\n'
     violations = check_all(code)
     i1 = [v for v in violations if v.rule_id == "I1"]
-    test("I1 fires on destructive action without confirmation", len(i1) > 0)
+    check("I1 fires on destructive action without confirmation", len(i1) > 0)
 
 
 def test_mcp_protocol():
@@ -161,18 +161,18 @@ def test_mcp_protocol():
 
     # Initialize
     resp = handle_request({"method": "initialize", "id": 1})
-    test("initialize returns serverInfo", "serverInfo" in resp)
-    test("server name is orchard-hig", resp["serverInfo"]["name"] == "orchard-hig")
+    check("initialize returns serverInfo", "serverInfo" in resp)
+    check("server name is orchard-hig", resp["serverInfo"]["name"] == "orchard-hig")
 
     # Tools list
     resp = handle_request({"method": "tools/list", "id": 2})
     tools = resp["tools"]
     tool_names = [t["name"] for t in tools]
-    test("4 tools listed", len(tools) == 4)
-    test("hig_check_file tool exists", "hig_check_file" in tool_names)
-    test("hig_check_code tool exists", "hig_check_code" in tool_names)
-    test("hig_suggest tool exists", "hig_suggest" in tool_names)
-    test("hig_rules tool exists", "hig_rules" in tool_names)
+    check("4 tools listed", len(tools) == 4)
+    check("hig_check_file tool exists", "hig_check_file" in tool_names)
+    check("hig_check_code tool exists", "hig_check_code" in tool_names)
+    check("hig_suggest tool exists", "hig_suggest" in tool_names)
+    check("hig_rules tool exists", "hig_rules" in tool_names)
 
     # hig_check_code
     resp = handle_request({
@@ -181,7 +181,7 @@ def test_mcp_protocol():
         "id": 3
     })
     result = json.loads(resp["content"][0]["text"])
-    test("hig_check_code returns violations count", "violations" in result)
+    check("hig_check_code returns violations count", "violations" in result)
 
     # hig_suggest
     resp = handle_request({
@@ -190,7 +190,7 @@ def test_mcp_protocol():
         "id": 4
     })
     result = json.loads(resp["content"][0]["text"])
-    test("hig_suggest returns code for button", "code" in result)
+    check("hig_suggest returns code for button", "code" in result)
 
     # hig_rules
     resp = handle_request({
@@ -199,7 +199,7 @@ def test_mcp_protocol():
         "id": 5
     })
     result = json.loads(resp["content"][0]["text"])
-    test("hig_rules returns 22+ rules", result["total"] >= 22)
+    check("hig_rules returns 22+ rules", result["total"] >= 22)
 
     # Unknown tool
     resp = handle_request({
@@ -208,7 +208,7 @@ def test_mcp_protocol():
         "id": 6
     })
     result = json.loads(resp["content"][0]["text"])
-    test("unknown tool returns error", "error" in result)
+    check("unknown tool returns error", "error" in result)
 
 
 def test_format_report():
@@ -219,12 +219,12 @@ def test_format_report():
         Violation("C1", "color", "info", "Test info", 5),
     ]
     report = format_report(violations, "test.swift")
-    test("report contains filename", "test.swift" in report)
-    test("report contains issue count", "2 issue(s)" in report)
-    test("report contains summary", "Summary:" in report)
+    check("report contains filename", "test.swift" in report)
+    check("report contains issue count", "2 issue(s)" in report)
+    check("report contains summary", "Summary:" in report)
 
     empty = format_report([], "clean.swift")
-    test("empty report says all clear", "All clear" in empty)
+    check("empty report says all clear", "All clear" in empty)
 
 
 if __name__ == "__main__":
